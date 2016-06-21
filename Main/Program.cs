@@ -52,7 +52,7 @@ namespace Main
                         Timestamp = date
                     };
                     trade.Stock.TickerPrice = trade.Price;
-                    Console.WriteLine(string.Format("Trade [{0}]: {1}; Dividend Yeld [{2:0.00}], P/E Ratio [{3:0.00}]",
+                    Console.WriteLine(string.Format("Trade [{0}]: {1}; Dividend Yeld [{2:0.##}], P/E Ratio [{3:0.##}]",
                         i + 1, trade, trade.Stock.DividendYeld(), trade.Stock.PERatio()));
 
                     tradeOperations.RecordTrade(trade);
@@ -62,9 +62,9 @@ namespace Main
                     {
                         StringBuilder sb = new StringBuilder("\tStock Prices: ");
                         foreach (Stock stock in TradeOperations.Stocks)
-                            sb.Append(string.Format("[{0} = {1:0.00}]\t", stock.StockSymbol, tradeOperations.StockPrice(stock.StockSymbol)));
+                            sb.Append(string.Format("[{0} = {1:0.##}]\t", stock.StockSymbol, tradeOperations.StockPrice(stock.StockSymbol)));
                         Console.WriteLine(sb);
-                        Console.WriteLine(string.Format("\tGBCE All Share Index = [{0:0.00}]", tradeOperations.StocksGeometricMean()));
+                        Console.WriteLine(string.Format("\tGBCE All Share Index = [{0:0.##}]", tradeOperations.StocksGeometricMean()));
                     }
                 }
             }

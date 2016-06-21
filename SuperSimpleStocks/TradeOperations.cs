@@ -32,8 +32,9 @@ namespace SuperSimpleStocks
 
         public double StocksGeometricMean()
         {
-            return Math.Pow(Stocks.Where(x => x.TickerPrice > 0).
-                Aggregate(1.0, (tot, x) => tot * x.TickerPrice), 1 / Stocks.Count);
+            List<Stock> validStocks = new List<Stock>();
+            validStocks.AddRange(Stocks.Where(x => StockPrice(x.StockSymbol) > 0));
+            return Math.Pow(validStocks.Aggregate(1.0, (tot, x) => tot * StockPrice(x.StockSymbol)), 1.0 / validStocks.Count());
         }
 
         public double StockPrice(string stockSymbol)
