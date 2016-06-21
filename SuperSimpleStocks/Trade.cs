@@ -23,8 +23,8 @@ namespace SuperSimpleStocks
             }
         }
 
-        private uint _quantity;
-        public uint Quantity
+        private int _quantity;
+        public int Quantity
         {
             get
             {
@@ -81,6 +81,26 @@ namespace SuperSimpleStocks
             {
                 _stock = value;
             }
+        }
+
+        /// <summary>
+        /// Calculate Dividend Yeld of a single trade, common or preferrend
+        /// </summary>
+        /// <returns>Dividend Yeld</returns>
+        public double DividendYeld()
+        {
+            return _stock.Type == Stock.Types.COMMON.ToString() ? _stock.LastDividend / Price :
+                _stock.Type == Stock.Types.PREFERRED.ToString() ? _stock.FixedDividend * _stock.ParValue / Price : 
+                -1;
+        }
+
+        /// <summary>
+        /// Calculate P/E Ratio of a single trade
+        /// </summary>
+        /// <returns>P/E Ratio</returns>
+        public double PERatio()
+        {
+            return Price / DividendYeld();
         }
 
         public override string ToString()

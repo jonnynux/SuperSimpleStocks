@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SuperSimpleStocks
 {
+    /// <summary>
+    /// Record trades and also calculates
+    /// </summary>
     public class TradeOperations : ITradeOperations
     {
         private static readonly ILog Log =
@@ -30,13 +33,23 @@ namespace SuperSimpleStocks
             return true;
         }
 
+        /// <summary>
+        /// Calculate the GBCE All Share Index using the geometric mean of prices for all stocks
+        /// </summary>
+        /// <returns>GBCE All Share Index</returns>
         public double StocksGeometricMean()
         {
             List<Stock> validStocks = new List<Stock>();
             validStocks.AddRange(Stocks.Where(x => StockPrice(x.StockSymbol) > 0));
-            return Math.Pow(validStocks.Aggregate(1.0, (tot, x) => tot * StockPrice(x.StockSymbol)), 1.0 / validStocks.Count());
+            return Math.Pow(validStocks.Aggregate(1.0, (tot, x) => tot * StockPrice(x.StockSymbol)), 
+                1.0 / validStocks.Count());
         }
 
+        /// <summary>
+        /// Calculate Stock Price based on trades recorded in past 15 minutes
+        /// </summary>
+        /// <param name="stockSymbol"></param>
+        /// <returns>Stock Price</returns>
         public double StockPrice(string stockSymbol)
         {
             List<Trade> validTrades = new List<Trade>();
@@ -49,7 +62,7 @@ namespace SuperSimpleStocks
                 return 0;
             }
 
-            return validTrades.Aggregate(0.0, (tot, x) => tot + x.Price * x.Quantity) /
+            return validTrades.Aggregate(0.0, (tot, x) => tot + (x.Price * x.Quantity)) /
                 validTrades.Aggregate(0.0, (tot, x) => tot + x.Quantity);
         }
     }

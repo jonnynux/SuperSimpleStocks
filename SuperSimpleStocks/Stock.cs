@@ -86,32 +86,6 @@ namespace SuperSimpleStocks
             }
         }
 
-        private double _tickerPrice;
-        public double TickerPrice
-        {
-            get
-            {
-                return _tickerPrice;
-            }
-            set
-            {
-                if (value <= 0)
-                    throw new SuperSimpleStocksException(Properties.Resources.SUPERSIMPLESTOCKS_ERR_006, value, "Ticker Price");
-                _tickerPrice = value;
-            }
-        }
-
-        public double DividendYeld()
-        {
-            return _type == Types.COMMON.ToString() ? _lastDividend / _tickerPrice :
-                _type == Types.PREFERRED.ToString() ? _fixedDividend * _parValue / _tickerPrice : -1;
-        }
-
-        public double PERatio()
-        {
-            return _tickerPrice / DividendYeld();
-        }
-
         public override string ToString()
         {
             return string.Format("StockSymbol [{0}], Type [{1}], LastDividend [{2}], FixedDividend [{3}], ParValue [{4}]",

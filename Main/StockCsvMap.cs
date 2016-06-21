@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Main
 {
+    // Utility class for CSV sample data mapping
     public sealed class StockCsvMap : CsvClassMap<Stock>
     {
         public StockCsvMap()
